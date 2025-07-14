@@ -124,5 +124,6 @@ clearButton.grid(row = 5, column = 0, sticky = "news", padx = 20, pady= 10)
 for widget in data_entry.winfo_children():
     widget.grid_configure(padx = 5, pady = 5)
 
+#test comment
 
 root.mainloop()
