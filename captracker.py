@@ -1,9 +1,23 @@
 import math
 import datetime
+import sqlite3
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+
+
+#Creates a object that represents the connection to the database called records on the disk
+con = sqlite3.connect("records.db")
+
+#We need this to execute SQL statements and fetch results in database
+cur = con.cursor()
+
+#Creates my table called "listing" with the following categories
+cur.execute("CREATE TABLE listing(address)")
+
+#Adds values to my table made above
+sql_query = "INSERT INTO listing (address) VALUES (?)"
 
 
 
@@ -13,7 +27,10 @@ def show_message(date, third, grossEnt):
             grossEnt = numCheck(grossEnt)
             if numCheck(third):
                 third = numCheck(third)
-                calc(grossEnt, third)
+                cur.execute(sql_query,(calc(grossEnt, third),))
+                con.commit()
+                print("data entered to database")
+                print(cur.fetchall())
             else:
                 messagebox.showinfo("Info", "Incorrect Format: $ Other Parties")
         else:
@@ -42,6 +59,8 @@ def calc(gross, other):
     Label(top, text = "Total Comission: $" + str(com)).pack(pady = 5)    
     Label(top, text = "Cap Split: $" + str(spl)).pack(pady = 5)
     Label(top, text = "Cap Contribution: $" + str(capCon)).pack(pady = 5)
+    return address_entry.get()
+    
 
 def numCheck(x):
     x = "".join(x.split())
@@ -124,6 +143,6 @@ clearButton.grid(row = 5, column = 0, sticky = "news", padx = 20, pady= 10)
 for widget in data_entry.winfo_children():
     widget.grid_configure(padx = 5, pady = 5)
 
-#test comment
+
 
 root.mainloop()
