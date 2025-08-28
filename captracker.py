@@ -1,23 +1,13 @@
 import math
 import datetime
-import sqlite3
+import database
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 
 
-#Creates a object that represents the connection to the database called records on the disk
-con = sqlite3.connect("records.db")
 
-#We need this to execute SQL statements and fetch results in database
-cur = con.cursor()
-
-#Creates my table called "listing" with the following categories
-cur.execute("CREATE TABLE listing(address)")
-
-#Adds values to my table made above
-sql_query = "INSERT INTO listing (address) VALUES (?)"
 
 
 
