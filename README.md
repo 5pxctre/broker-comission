@@ -1,4 +1,10 @@
-# broker-comission
-Built for calculating and managing a team's comission rates and caps within a real estate brokerage.
+# What is this project?
+Essentially this is a lightweight local (intially at the time of writing this at least) scripting program with a gui that helps real estate brokers, calculate listing transactions, team splits, cap splits and possibly more (In the future). You can input the address, listing price sold, closing date and listing price. After all the input it is calculated using basic python logic and then saved to a database created locally on your machine with SQLite. Cool stuff.
 
-This is my first real project that can used for real world implications. It started as a task by my mother to help visualize and organize a system she had in place on a google sheets spreadsheet.
+# How it's made
+**Tech used:** Python
+
+Used the Tkinter library or ttk? Idk the difference tbh. Also used SQLite3 module which has built in support for python, but it's a file-based dbms system. So whatever that means lol.
+
+# Conclusion
+This project is nothing crazy, I just needed to start making stuff. So hopefully my README files in the future are more interesting and more polished.
