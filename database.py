@@ -49,12 +49,12 @@ class Database:
             self.conn.close() #End db connection
     
     #test code
-db = Database()
-print("Add listing...\n")
-db.add_listing("2106 Gaylin Hills Ct.", 32000)
-all_listings = db.get_all_listings()
+#db = Database()
+#print("Add listing...\n")
+#db.add_listing("1234 Candy Street Ln.", 32000)
+#all_listings = db.get_all_listings()
 
-for  listing in all_listings:
-    print(f" ID: {listing['id']}, Address: {listing['address']} Price: {listing['price']}")
+#for  listing in all_listings:
+    #print(f" ID: {listing['id']}, Address: {listing['address']} Price: {listing['price']}")
 
-db.close_connection()
+#db.close_connection()

@@ -1,14 +1,10 @@
 import math
 import datetime
-import database
+from database import Database
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-
-
-
-
 
 
 def show_message(date, third, grossEnt):
@@ -17,10 +13,7 @@ def show_message(date, third, grossEnt):
             grossEnt = numCheck(grossEnt)
             if numCheck(third):
                 third = numCheck(third)
-                cur.execute(sql_query,(calc(grossEnt, third),))
-                con.commit()
-                print("data entered to database")
-                print(cur.fetchall())
+                calc(grossEnt, third)
             else:
                 messagebox.showinfo("Info", "Incorrect Format: $ Other Parties")
         else:
@@ -96,7 +89,6 @@ main_frame.pack()
 data_entry= ttk.LabelFrame(main_frame, text= "Data Entry")
 data_entry.grid(row = 0, column = 0)
 
-
 #Labels for first frame
 closing_date_entry = ttk.Label(data_entry, text = "Closing Date (mm/dd/yy)")
 closing_date_entry.grid(row = 0, column = 0)
@@ -117,7 +109,6 @@ gross_earned.grid(row = 3, column=0)
 party_input = Entry(data_entry)
 party_input.grid(row = 3, column = 1)   
 
-
 #Frame for Calculation button
 calc_frame = ttk.LabelFrame(main_frame)
 calc_frame.grid(row = 2, column = 0, sticky = "news")
@@ -132,7 +123,5 @@ clearButton.grid(row = 5, column = 0, sticky = "news", padx = 20, pady= 10)
 
 for widget in data_entry.winfo_children():
     widget.grid_configure(padx = 5, pady = 5)
-
-
 
 root.mainloop()
