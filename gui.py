@@ -70,7 +70,13 @@ class App:
         otherParty = self.party_entry.get()
         grossAmt = self.gross_entry.get()
         address = self.address_entry.get()
-        messagebox.showinfo("Info", self.logic.entryValidation(date,otherParty,grossAmt))
+
+        try:
+            message,_,_,_ = self.logic.entryValidation(date, otherParty, grossAmt, address)
+            messagebox.showinfo("Success", message)
+        except ValueError as e:
+            messagebox.showerror("Invalid Input", str(e))
+        #messagebox.showinfo("Info", self.logic.entryValidation(date,otherParty,grossAmt,address))
 
 if __name__ == "__main__":
     logic = AppLogic()
