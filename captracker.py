@@ -81,7 +81,6 @@ root.geometry('500x350')
 style = ttk.Style(root)
 style.theme_use('vista')
 
-#Making a frame
 main_frame = ttk.Frame(root)
 main_frame.pack()
 
@@ -107,7 +106,7 @@ address_entry.grid(row= 1 , column = 1)
 gross_earned = Entry(data_entry)
 gross_earned.grid(row = 3, column=0)
 party_input = Entry(data_entry)
-party_input.grid(row = 3, column = 1)   
+party_input.grid(row = 3, column = 1)  
 
 #Frame for Calculation button
 calc_frame = ttk.LabelFrame(main_frame)
