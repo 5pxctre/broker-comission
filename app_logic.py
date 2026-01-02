@@ -1,64 +1,53 @@
 import math
 import datetime
-
+from database import Database
 
 class AppLogic:
-    
+    def __init__(self):
+        self.db = Database()
+
     def numCheck(self, x):
         if x:
             x = "".join(x.split())
-            x = x.replace(",", "")
-            if x[0] == "$" and (x.count("$") == 1):
-                x = x.replace("$", "")
-            x = x.replace(".", "")
-            if not x.isdigit():
+            x = x.replace(",", "").replace("$", "")
+            try:
+                val = float(x)
+                if val >= 0:
+                    return val
                 return False
-            x = float(x)
-            if x >= 0:
-                return x
-            else:
+            except ValueError:
                 return False
-        else:
-            return False
-        
+        return False
 
     def entryValidation(self, date, otherParty, grossAmt, address):
         if not self.dateCheck(date):
             raise ValueError("Incorrect Format: Closing Date")
         
-        if not self.numCheck(grossAmt):
+        grossVal = self.numCheck(grossAmt)
+        if grossVal is False:
             raise ValueError("Incorrect Format: Gross Earned")
         
-        if not self.numCheck(otherParty):
-            raise ValueError("Incorrect Format: $ Other Parties")
+        partyVal = self.numCheck(otherParty)
+        if partyVal is False:
+            if otherParty == "" or otherParty is None:
+                partyVal = 0.0
+            else:
+                raise ValueError("Incorrect Format: $ Other Parties")
         
         if not address:
             raise ValueError("Incorrect Format: Address Input Required")
         
-        split, comission, cap_Contribution = self.split_calc(self.numCheck(grossAmt),self.numCheck(otherParty))
-        return "Data recorded", split, comission, cap_Contribution
+        split, commission, cap_Contribution = self.split_calc(grossVal, partyVal)
+
+        # --- CHANGED: Passing 'partyVal' (Other Parties) to DB ---
+        self.db.add_listing(address, grossVal, split, commission, partyVal)
+
+        return "Data recorded", split, commission, cap_Contribution
     
-    
-    """  def entryValidation(self, date, otherParty, grossAmt,address):
-        if self.dateCheck(date):
-            if self.numCheck(grossAmt):
-                grossAmt = self.numCheck(grossAmt)
-                if self.numCheck(otherParty):
-                    otherParty = self.numCheck(otherParty)
-                    if address:
-                        pass
-                    else:
-                        return "Incorrect Format: Address input required"
-                else:
-                    return "Incorrect Format: $ Other Parties"
-            else:
-                return "Incorrect Format: Gross Earned"
-        else:
-            return "Incorrect Format: Closing Date"
-        spl, com, capcon = self.split_calc(grossAmt, otherParty)
-        return "Data recorded", spl, com, capcon"""
-    
-    def dateCheck(self,str):
+    def fetch_history(self):
+        return self.db.get_all_listings()
+
+    def dateCheck(self, str):
         try: 
             datetime.datetime.strptime(str, "%m/%d/%y")
             return True
@@ -66,11 +55,9 @@ class AppLogic:
             return False
         
     def split_calc(self, gross, otherParty):
-        comission = gross - otherParty
-        split = comission * 0.2
-        comission = round(comission, 2)
+        commission = gross - otherParty
+        split = commission * 0.2
+        commission = round(commission, 2)
         split = round(split, 2)
         cap_Contribution = split
-        return split, comission, cap_Contribution
-    
-    #this is new change
+        return split, commission, cap_Contribution
