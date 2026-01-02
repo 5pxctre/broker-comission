@@ -72,3 +72,5 @@ class AppLogic:
         split = round(split, 2)
         cap_Contribution = split
         return split, comission, cap_Contribution
+    
+    #this is new change
